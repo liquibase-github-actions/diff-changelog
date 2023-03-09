@@ -6,7 +6,7 @@ Compare two databases to produce changesets and write them to a changelog file
 ```yaml
 steps:
 - uses: actions/checkout@v3
-- uses: liquibase-github-actions/diff-changelog@v4.19.1
+- uses: liquibase-github-actions/diff-changelog@v4.20.0
   with:
     # Changelog file to write results
     # string
@@ -18,10 +18,20 @@ steps:
     # Required
     referenceUrl: ""
 
-    # The JDBC target database connection URL
+    # The JDBC database connection URL
     # string
     # Required
     url: ""
+
+    # 
+    # string
+    # Optional
+    compareControl: ""
+
+    # 
+    # string
+    # Optional
+    database: ""
 
     # The default catalog name to use for the database connection
     # string
@@ -53,7 +63,12 @@ steps:
     # Optional
     excludeObjects: ""
 
-    # If true, the catalog will be included in generated changeSets
+    # Output format. Default: TXT
+    # string
+    # Optional
+    format: ""
+
+    # If true, the catalog will be included in generated changeSets. Defaults to false.
     # bool
     # Optional
     includeCatalog: ""
@@ -63,35 +78,70 @@ steps:
     # Optional
     includeObjects: ""
 
-    # If true, the schema will be included in generated changeSets
+    # If true, the schema will be included in generated changeSets. Defaults to false.
     # bool
     # Optional
     includeSchema: ""
 
-    # Include the tablespace attribute in the changelog
-    # string
+    # Include the tablespace attribute in the changelog. Defaults to false.
+    # bool
     # Optional
     includeTablespace: ""
 
-    # The target database password
+    # 
+    # string
+    # Optional
+    objectChangeFilter: ""
+
+    # Output schemas names. This is a CSV list.
+    # string
+    # Optional
+    outputSchemas: ""
+
+    # Password to use to connect to the database
     # string
     # Optional
     password: ""
 
-    # The reference default catalog name to use for the database connection
+    # 
+    # string
+    # Optional
+    referenceDatabase: ""
+
+    # The default catalog name to use for the reference database connection
     # string
     # Optional
     referenceDefaultCatalogName: ""
 
-    # The reference default schema name to use for the database connection
+    # The default schema name to use for the reference database connection
     # string
     # Optional
     referenceDefaultSchemaName: ""
+
+    # The JDBC driver class for the reference database
+    # string
+    # Optional
+    referenceDriver: ""
+
+    # The JDBC driver properties file for the reference database
+    # string
+    # Optional
+    referenceDriverPropertiesFile: ""
 
     # The reference database password
     # string
     # Optional
     referencePassword: ""
+
+    # Schemas names on reference database to use in diff. This is a CSV list.
+    # string
+    # Optional
+    referenceSchemas: ""
+
+    # 
+    # string
+    # Optional
+    referenceSnapshotControl: ""
 
     # The reference database username
     # string
@@ -103,7 +153,27 @@ steps:
     # Optional
     schemas: ""
 
-    # The target database username
+    # 
+    # bool
+    # Optional
+    skipDatabaseStep: ""
+
+    # 
+    # string
+    # Optional
+    snapshotListener: ""
+
+    # 
+    # string
+    # Optional
+    snapshotTypes: ""
+
+    # 
+    # string
+    # Optional
+    targetSnapshotControl: ""
+
+    # Username to use to connect to the database
     # string
     # Optional
     username: ""
@@ -120,7 +190,7 @@ The liquibase diff changelog action accepts all valid liquibase global options a
 ```yaml
 steps:
   - uses: actions/checkout@v3
-  - uses: liquibase-github-actions/diff-changelog@v4.19.1
+  - uses: liquibase-github-actions/diff-changelog@v4.20.0
     with:
       changelogFile: ""
       referenceUrl: ""

@@ -6,6 +6,12 @@ inputs:
   changelogFile: # string
     description: '*required* Changelog file to write results'
     required: true
+  compareControl: # string
+    description: ''
+    required: false
+  database: # string
+    description: ''
+    required: false
   defaultCatalogName: # string
     description: 'The default catalog name to use for the database connection'
     required: false
@@ -24,29 +30,53 @@ inputs:
   excludeObjects: # string
     description: 'Objects to exclude from diff'
     required: false
+  format: # string
+    description: 'Output format. Default: TXT'
+    required: false
   includeCatalog: # bool
-    description: 'If true, the catalog will be included in generated changeSets'
+    description: 'If true, the catalog will be included in generated changeSets. Defaults to false.'
     required: false
   includeObjects: # string
     description: 'Objects to include in diff'
     required: false
   includeSchema: # bool
-    description: 'If true, the schema will be included in generated changeSets'
+    description: 'If true, the schema will be included in generated changeSets. Defaults to false.'
     required: false
-  includeTablespace: # string
-    description: 'Include the tablespace attribute in the changelog'
+  includeTablespace: # bool
+    description: 'Include the tablespace attribute in the changelog. Defaults to false.'
+    required: false
+  objectChangeFilter: # string
+    description: ''
+    required: false
+  outputSchemas: # string
+    description: 'Output schemas names. This is a CSV list.'
     required: false
   password: # string
-    description: 'The target database password'
+    description: 'Password to use to connect to the database'
+    required: false
+  referenceDatabase: # string
+    description: ''
     required: false
   referenceDefaultCatalogName: # string
-    description: 'The reference default catalog name to use for the database connection'
+    description: 'The default catalog name to use for the reference database connection'
     required: false
   referenceDefaultSchemaName: # string
-    description: 'The reference default schema name to use for the database connection'
+    description: 'The default schema name to use for the reference database connection'
+    required: false
+  referenceDriver: # string
+    description: 'The JDBC driver class for the reference database'
+    required: false
+  referenceDriverPropertiesFile: # string
+    description: 'The JDBC driver properties file for the reference database'
     required: false
   referencePassword: # string
     description: 'The reference database password'
+    required: false
+  referenceSchemas: # string
+    description: 'Schemas names on reference database to use in diff. This is a CSV list.'
+    required: false
+  referenceSnapshotControl: # string
+    description: ''
     required: false
   referenceUrl: # string
     description: '*required* The JDBC reference database connection URL'
@@ -57,11 +87,23 @@ inputs:
   schemas: # string
     description: 'Schemas to include in diff'
     required: false
+  skipDatabaseStep: # bool
+    description: ''
+    required: false
+  snapshotListener: # string
+    description: ''
+    required: false
+  snapshotTypes: # string
+    description: ''
+    required: false
+  targetSnapshotControl: # string
+    description: ''
+    required: false
   url: # string
-    description: '*required* The JDBC target database connection URL'
+    description: '*required* The JDBC database connection URL'
     required: true
   username: # string
-    description: 'The target database username'
+    description: 'Username to use to connect to the database'
     required: false
   alwaysDropInsteadOfReplace: # bool
     description: 'If true, drop and recreate a view instead of replacing it.'
@@ -99,9 +141,6 @@ inputs:
   ddlLockTimeout: # int32
     description: 'The DDL_LOCK_TIMEOUT parameter indicates the number of seconds a DDL command should wait for the locks to become available before throwing the resource busy error message. This applies only to Oracle databases.'
     required: false
-  defaultloggerLevel: # string
-    description: 'Logging level'
-    required: false
   defaultsFile: # string
     description: 'File with default Liquibase properties'
     required: false
@@ -110,6 +149,9 @@ inputs:
     required: false
   duplicateFileMode: # string
     description: 'How to handle multiple files being found in the search path that have duplicate paths. Options are WARN (log warning and choose one at random) or ERROR (fail current operation)'
+    required: false
+  errorOnCircularIncludeAll: # bool
+    description: 'Throw an error if Liquibase detects that an includeAll will cause a circular reference (and thus a changelog parse error).'
     required: false
   fileEncoding: # string
     description: 'Encoding to use when reading files. Valid values include: UTF-8, UTF-16, UTF-16BE, UTF-16LE, US-ASCII, or OS to use the system configured encoding.'
@@ -162,6 +204,9 @@ inputs:
   logFile: # string
     description: ''
     required: false
+  logFormat: # string
+    description: 'Sets the format of log output to console or log files. Open Source users default to unstructured "TEXT" logs to the console or output log files. Pro users have the option to set value as "JSON" or "JSON_PRETTY" to enable json-structured log files to the console or output log files.'
+    required: false
   logLevel: # string
     description: 'Controls which logs get set to stderr AND to any log file. The CLI defaults, if log file set, to SEVERE. Others vary by integration. The official log levels are: OFF, SEVERE, WARNING, INFO, FINE'
     required: false
@@ -173,6 +218,9 @@ inputs:
     required: false
   nativeExecutor: # string
     description: 'Custom executor that can specified'
+    required: false
+  onMissingInclude: # string
+    description: 'If set to WARN, then liquibase will not throw exception on missing changelog file, instead will show a warning message.'
     required: false
   outputFile: # string
     description: ''
@@ -231,28 +279,45 @@ inputs:
   useProcedureSchema: # bool
     description: 'If set to true (default value), createProcedure tags with a set schemaName will modify the procedure body with the given schema name.'
     required: false
+  validateXmlChangelogFiles: # bool
+    description: 'Will perform xsd validation of XML changelog files. When many XML changelog files are included this validation may impact Liquibase performance. Defaults to true.'
+    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
     - ${{ inputs.changelogFile }}
+    - ${{ inputs.compareControl }}
+    - ${{ inputs.database }}
     - ${{ inputs.defaultCatalogName }}
     - ${{ inputs.defaultSchemaName }}
     - ${{ inputs.diffTypes }}
     - ${{ inputs.driver }}
     - ${{ inputs.driverPropertiesFile }}
     - ${{ inputs.excludeObjects }}
+    - ${{ inputs.format }}
     - ${{ inputs.includeCatalog }}
     - ${{ inputs.includeObjects }}
     - ${{ inputs.includeSchema }}
     - ${{ inputs.includeTablespace }}
+    - ${{ inputs.objectChangeFilter }}
+    - ${{ inputs.outputSchemas }}
     - ${{ inputs.password }}
+    - ${{ inputs.referenceDatabase }}
     - ${{ inputs.referenceDefaultCatalogName }}
     - ${{ inputs.referenceDefaultSchemaName }}
+    - ${{ inputs.referenceDriver }}
+    - ${{ inputs.referenceDriverPropertiesFile }}
     - ${{ inputs.referencePassword }}
+    - ${{ inputs.referenceSchemas }}
+    - ${{ inputs.referenceSnapshotControl }}
     - ${{ inputs.referenceUrl }}
     - ${{ inputs.referenceUsername }}
     - ${{ inputs.schemas }}
+    - ${{ inputs.skipDatabaseStep }}
+    - ${{ inputs.snapshotListener }}
+    - ${{ inputs.snapshotTypes }}
+    - ${{ inputs.targetSnapshotControl }}
     - ${{ inputs.url }}
     - ${{ inputs.username }}
     - ${{ inputs.alwaysDropInsteadOfReplace }}
@@ -267,10 +332,10 @@ runs:
     - ${{ inputs.databaseChangelogTableName }}
     - ${{ inputs.databaseClass }}
     - ${{ inputs.ddlLockTimeout }}
-    - ${{ inputs.defaultloggerLevel }}
     - ${{ inputs.defaultsFile }}
     - ${{ inputs.diffColumnOrder }}
     - ${{ inputs.duplicateFileMode }}
+    - ${{ inputs.errorOnCircularIncludeAll }}
     - ${{ inputs.fileEncoding }}
     - ${{ inputs.filterLogMessages }}
     - ${{ inputs.generateChangesetCreatedValues }}
@@ -288,10 +353,12 @@ runs:
     - ${{ inputs.liquibaseTablespaceName }}
     - ${{ inputs.logChannels }}
     - ${{ inputs.logFile }}
+    - ${{ inputs.logFormat }}
     - ${{ inputs.logLevel }}
     - ${{ inputs.missingPropertyMode }}
     - ${{ inputs.monitorPerformance }}
     - ${{ inputs.nativeExecutor }}
+    - ${{ inputs.onMissingInclude }}
     - ${{ inputs.outputFile }}
     - ${{ inputs.outputFileEncoding }}
     - ${{ inputs.outputLineSeparator }}
@@ -311,6 +378,7 @@ runs:
     - ${{ inputs.strict }}
     - ${{ inputs.supportPropertyEscaping }}
     - ${{ inputs.useProcedureSchema }}
+    - ${{ inputs.validateXmlChangelogFiles }}
 branding:
   icon: database
   color: red
