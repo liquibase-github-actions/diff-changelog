@@ -23,15 +23,10 @@ steps:
     # Required
     url: ""
 
-    # 
+    # Specifies the author for changesets in the generated changelog
     # string
     # Optional
-    compareControl: ""
-
-    # 
-    # string
-    # Optional
-    database: ""
+    author: ""
 
     # The default catalog name to use for the database connection
     # string
@@ -63,11 +58,6 @@ steps:
     # Optional
     excludeObjects: ""
 
-    # Output format. Default: TXT
-    # string
-    # Optional
-    format: ""
-
     # If true, the catalog will be included in generated changeSets. Defaults to false.
     # bool
     # Optional
@@ -88,11 +78,6 @@ steps:
     # Optional
     includeTablespace: ""
 
-    # 
-    # string
-    # Optional
-    objectChangeFilter: ""
-
     # Output schemas names. This is a CSV list.
     # string
     # Optional
@@ -102,11 +87,6 @@ steps:
     # string
     # Optional
     password: ""
-
-    # 
-    # string
-    # Optional
-    referenceDatabase: ""
 
     # The default catalog name to use for the reference database connection
     # string
@@ -138,11 +118,6 @@ steps:
     # Optional
     referenceSchemas: ""
 
-    # 
-    # string
-    # Optional
-    referenceSnapshotControl: ""
-
     # The reference database username
     # string
     # Optional
@@ -152,26 +127,6 @@ steps:
     # string
     # Optional
     schemas: ""
-
-    # 
-    # bool
-    # Optional
-    skipDatabaseStep: ""
-
-    # 
-    # string
-    # Optional
-    snapshotListener: ""
-
-    # 
-    # string
-    # Optional
-    snapshotTypes: ""
-
-    # 
-    # string
-    # Optional
-    targetSnapshotControl: ""
 
     # Username to use to connect to the database
     # string

@@ -14,41 +14,32 @@ service DiffChangelogService {
 
 /* Compare two databases to produce changesets and write them to a changelog file */
 message DiffChangelogRequest {
-  string changelog_file = 1; // *required* Changelog file to write results
-  optional string compare_control = 2;
-  optional string database = 3;
-  optional string default_catalog_name = 4; // The default catalog name to use for the database connection
-  optional string default_schema_name = 5; // The default schema name to use for the database connection
-  optional string diff_types = 6; // Types of objects to compare
-  optional string driver = 7; // The JDBC driver class
-  optional string driver_properties_file = 8; // The JDBC driver properties file
-  optional string exclude_objects = 9; // Objects to exclude from diff
-  optional string format = 10; // Output format. Default: TXT
-  optional bool include_catalog = 11; // If true, the catalog will be included in generated changeSets. Defaults to false.
-  optional string include_objects = 12; // Objects to include in diff
-  optional bool include_schema = 13; // If true, the schema will be included in generated changeSets. Defaults to false.
-  optional bool include_tablespace = 14; // Include the tablespace attribute in the changelog. Defaults to false.
-  optional string object_change_filter = 15;
-  optional string output_schemas = 16; // Output schemas names. This is a CSV list.
-  optional string password = 17; // Password to use to connect to the database
-  optional string reference_database = 18;
-  optional string reference_default_catalog_name = 19; // The default catalog name to use for the reference database connection
-  optional string reference_default_schema_name = 20; // The default schema name to use for the reference database connection
-  optional string reference_driver = 21; // The JDBC driver class for the reference database
-  optional string reference_driver_properties_file = 22; // The JDBC driver properties file for the reference database
-  optional string reference_password = 23; // The reference database password
-  optional string reference_schemas = 24; // Schemas names on reference database to use in diff. This is a CSV list.
-  optional string reference_snapshot_control = 25;
-  string reference_url = 26; // *required* The JDBC reference database connection URL
-  optional string reference_username = 27; // The reference database username
-  optional string schemas = 28; // Schemas to include in diff
-  optional bool skip_database_step = 29;
-  optional string snapshot_listener = 30;
-  optional string snapshot_types = 31;
-  optional string target_snapshot_control = 32;
-  string url = 33; // *required* The JDBC database connection URL
-  optional string username = 34; // Username to use to connect to the database
-  liquibase.GlobalOptions global_options = 35;
+  optional string author = 1; // Specifies the author for changesets in the generated changelog
+  string changelog_file = 2; // *required* Changelog file to write results
+  optional string default_catalog_name = 3; // The default catalog name to use for the database connection
+  optional string default_schema_name = 4; // The default schema name to use for the database connection
+  optional string diff_types = 5; // Types of objects to compare
+  optional string driver = 6; // The JDBC driver class
+  optional string driver_properties_file = 7; // The JDBC driver properties file
+  optional string exclude_objects = 8; // Objects to exclude from diff
+  optional bool include_catalog = 9; // If true, the catalog will be included in generated changeSets. Defaults to false.
+  optional string include_objects = 10; // Objects to include in diff
+  optional bool include_schema = 11; // If true, the schema will be included in generated changeSets. Defaults to false.
+  optional bool include_tablespace = 12; // Include the tablespace attribute in the changelog. Defaults to false.
+  optional string output_schemas = 13; // Output schemas names. This is a CSV list.
+  optional string password = 14; // Password to use to connect to the database
+  optional string reference_default_catalog_name = 15; // The default catalog name to use for the reference database connection
+  optional string reference_default_schema_name = 16; // The default schema name to use for the reference database connection
+  optional string reference_driver = 17; // The JDBC driver class for the reference database
+  optional string reference_driver_properties_file = 18; // The JDBC driver properties file for the reference database
+  optional string reference_password = 19; // The reference database password
+  optional string reference_schemas = 20; // Schemas names on reference database to use in diff. This is a CSV list.
+  string reference_url = 21; // *required* The JDBC reference database connection URL
+  optional string reference_username = 22; // The reference database username
+  optional string schemas = 23; // Schemas to include in diff
+  string url = 24; // *required* The JDBC database connection URL
+  optional string username = 25; // Username to use to connect to the database
+  liquibase.GlobalOptions global_options = 26;
 }
 
 message Response {
