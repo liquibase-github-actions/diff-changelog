@@ -6,7 +6,7 @@ Compare two databases to produce changesets and write them to a changelog file
 ```yaml
 steps:
 - uses: actions/checkout@v3
-- uses: liquibase-github-actions/diff-changelog@v4.23.2
+- uses: liquibase-github-actions/diff-changelog@v4.24.0
   with:
     # Changelog file to write results
     # string
@@ -27,6 +27,11 @@ steps:
     # string
     # Optional
     author: ""
+
+    # Changeset contexts to generate
+    # string
+    # Optional
+    contextFilter: ""
 
     # The default catalog name to use for the database connection
     # string
@@ -78,6 +83,11 @@ steps:
     # Optional
     includeTablespace: ""
 
+    # Changeset labels to generate
+    # string
+    # Optional
+    labelFilter: ""
+
     # Output schemas names. This is a CSV list.
     # string
     # Optional
@@ -107,6 +117,16 @@ steps:
     # string
     # Optional
     referenceDriverPropertiesFile: ""
+
+    # Reference catalog to use for Liquibase objects
+    # string
+    # Optional
+    referenceLiquibaseCatalogName: ""
+
+    # Reference schema to use for Liquibase objects
+    # string
+    # Optional
+    referenceLiquibaseSchemaName: ""
 
     # The reference database password
     # string
@@ -145,7 +165,7 @@ The liquibase diff changelog action accepts all valid liquibase global options a
 ```yaml
 steps:
   - uses: actions/checkout@v3
-  - uses: liquibase-github-actions/diff-changelog@v4.23.2
+  - uses: liquibase-github-actions/diff-changelog@v4.24.0
     with:
       changelogFile: ""
       referenceUrl: ""
