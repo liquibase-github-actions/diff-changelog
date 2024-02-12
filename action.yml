@@ -93,6 +93,9 @@ inputs:
   referenceUsername: # string
     description: 'The reference database username'
     required: false
+  replaceIfExistsTypes: # string
+    description: 'Sets replaceIfExists="true" for changes of these types (supported types: createFunction, createPackage, createPackageBody, createProcedure, createTrigger, createView)'
+    required: false
   reportEnabled: # bool
     description: '[PRO] Enable or disable reporting.'
     required: false
@@ -102,12 +105,18 @@ inputs:
   reportPath: # string
     description: '[PRO] The path to the directory to generate the report.'
     required: false
+  runOnChangeTypes: # string
+    description: 'Sets runOnChange="true" for changesets containing solely changes of these types (e. g. createView, createProcedure, ...).'
+    required: false
   schemas: # string
     description: 'Schemas to include in diff'
     required: false
   url: # string
     description: '*required* The JDBC database connection URL'
     required: true
+  useOrReplaceOption: # bool
+    description: 'If true, will add "OR REPLACE" option to the create view change object'
+    required: false
   username: # string
     description: 'Username to use to connect to the database'
     required: false
@@ -191,6 +200,9 @@ inputs:
     required: false
   includeCatalogInSpecification: # bool
     description: 'Should Liquibase include the catalog name when determining equality?'
+    required: false
+  includeMatchingTagInRollbackOldest: # bool
+    description: 'If set to true, and there are multiple identical tags in the database changelog table, all of the newer matching tags will be rolled back while rolling back to the oldest tag. The default value for this option was false for all Liquibase versions equal to or older than 4.25.1.'
     required: false
   includeRelationsForComputedColumns: # bool
     description: 'If true, the parent relationship for computed columns is preserved in snapshot-dependent commands: snapshot and diff'
@@ -297,9 +309,6 @@ inputs:
   secureParsing: # bool
     description: 'If true, remove functionality from file parsers which could be used insecurely. Examples include (but not limited to) disabling remote XML entity support.'
     required: false
-  shouldGenerateChecksRunReport: # bool
-    description: 'If true, the checks run report will actually be generated. This argument supercedes whatever value you set on the command. However, both this and the command need to be set to true to actually generate the report.'
-    required: false
   shouldGenerateRollbackReport: # bool
     description: 'If true, the rollback report will actually be generated. This argument supercedes whatever value you set on the command. However, both this and the command need to be set to true to actually generate the report.'
     required: false
@@ -370,11 +379,14 @@ runs:
     - ${{ inputs.referenceSchemas }}
     - ${{ inputs.referenceUrl }}
     - ${{ inputs.referenceUsername }}
+    - ${{ inputs.replaceIfExistsTypes }}
     - ${{ inputs.reportEnabled }}
     - ${{ inputs.reportName }}
     - ${{ inputs.reportPath }}
+    - ${{ inputs.runOnChangeTypes }}
     - ${{ inputs.schemas }}
     - ${{ inputs.url }}
+    - ${{ inputs.useOrReplaceOption }}
     - ${{ inputs.username }}
     - ${{ inputs.addEmptyMdcValues }}
     - ${{ inputs.allowDuplicatedChangesetIdentifiers }}
@@ -403,6 +415,7 @@ runs:
     - ${{ inputs.generatedChangesetIdsContainsDescription }}
     - ${{ inputs.headless }}
     - ${{ inputs.includeCatalogInSpecification }}
+    - ${{ inputs.includeMatchingTagInRollbackOldest }}
     - ${{ inputs.includeRelationsForComputedColumns }}
     - ${{ inputs.includeSystemClasspath }}
     - ${{ inputs.licenseKey }}
@@ -438,7 +451,6 @@ runs:
     - ${{ inputs.reportsPath }}
     - ${{ inputs.searchPath }}
     - ${{ inputs.secureParsing }}
-    - ${{ inputs.shouldGenerateChecksRunReport }}
     - ${{ inputs.shouldGenerateRollbackReport }}
     - ${{ inputs.shouldRun }}
     - ${{ inputs.shouldSnapshotData }}

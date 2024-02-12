@@ -44,13 +44,16 @@ message DiffChangelogRequest {
   optional string reference_schemas = 28; // Schemas names on reference database to use in diff. This is a CSV list.
   string reference_url = 29; // *required* The JDBC reference database connection URL
   optional string reference_username = 30; // The reference database username
-  optional bool report_enabled = 31; // [PRO] Enable or disable reporting.
-  optional string report_name = 32; // [PRO] The name of the report.
-  optional string report_path = 33; // [PRO] The path to the directory to generate the report.
-  optional string schemas = 34; // Schemas to include in diff
-  string url = 35; // *required* The JDBC database connection URL
-  optional string username = 36; // Username to use to connect to the database
-  liquibase.GlobalOptions global_options = 37;
+  optional string replace_if_exists_types = 31; // Sets replaceIfExists="true" for changes of these types (supported types: createFunction, createPackage, createPackageBody, createProcedure, createTrigger, createView)
+  optional bool report_enabled = 32; // [PRO] Enable or disable reporting.
+  optional string report_name = 33; // [PRO] The name of the report.
+  optional string report_path = 34; // [PRO] The path to the directory to generate the report.
+  optional string run_on_change_types = 35; // Sets runOnChange="true" for changesets containing solely changes of these types (e. g. createView, createProcedure, ...).
+  optional string schemas = 36; // Schemas to include in diff
+  string url = 37; // *required* The JDBC database connection URL
+  optional bool use_or_replace_option = 38; // If true, will add 'OR REPLACE' option to the create view change object
+  optional string username = 39; // Username to use to connect to the database
+  liquibase.GlobalOptions global_options = 40;
 }
 
 message Response {
