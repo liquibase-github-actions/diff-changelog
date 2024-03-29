@@ -50,10 +50,11 @@ message DiffChangelogRequest {
   optional string report_path = 34; // [PRO] The path to the directory to generate the report.
   optional string run_on_change_types = 35; // Sets runOnChange="true" for changesets containing solely changes of these types (e. g. createView, createProcedure, ...).
   optional string schemas = 36; // Schemas to include in diff
-  string url = 37; // *required* The JDBC database connection URL
-  optional bool use_or_replace_option = 38; // If true, will add 'OR REPLACE' option to the create view change object
-  optional string username = 39; // Username to use to connect to the database
-  liquibase.GlobalOptions global_options = 40;
+  optional bool skip_object_sorting = 37; // When true will skip object sorting. This can be useful on databases that have a lot of packages/procedures that are linked to each other
+  string url = 38; // *required* The JDBC database connection URL
+  optional bool use_or_replace_option = 39; // If true, will add 'OR REPLACE' option to the create view change object
+  optional string username = 40; // Username to use to connect to the database
+  liquibase.GlobalOptions global_options = 41;
 }
 
 message Response {
