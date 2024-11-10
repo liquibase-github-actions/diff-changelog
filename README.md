@@ -6,7 +6,7 @@ Compare two databases to produce changesets and write them to a changelog file
 ```yaml
 steps:
 - uses: actions/checkout@v3
-- uses: liquibase-github-actions/diff-changelog@v4.29.2
+- uses: liquibase-github-actions/diff-changelog@v4.30.0
   with:
     # Changelog file to write results
     # string
@@ -163,7 +163,7 @@ steps:
     # Optional
     referenceUsername: ""
 
-    # Sets replaceIfExists="true" for changes of these types (supported types: createFunction, createPackage, createPackageBody, createProcedure, createTrigger, createView)
+    # Sets replaceIfExists="true" for changes of these types (supported types: createProcedure, createView)
     # string
     # Optional
     replaceIfExistsTypes: ""
@@ -220,7 +220,7 @@ The liquibase diff changelog action accepts all valid liquibase global options a
 ```yaml
 steps:
   - uses: actions/checkout@v3
-  - uses: liquibase-github-actions/diff-changelog@v4.29.2
+  - uses: liquibase-github-actions/diff-changelog@v4.30.0
     with:
       changelogFile: ""
       referenceUrl: ""

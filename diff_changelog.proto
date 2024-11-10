@@ -44,7 +44,7 @@ message DiffChangelogRequest {
   optional string reference_schemas = 28; // Schemas names on reference database to use in diff. This is a CSV list.
   string reference_url = 29; // *required* The JDBC reference database connection URL
   optional string reference_username = 30; // The reference database username
-  optional string replace_if_exists_types = 31; // Sets replaceIfExists="true" for changes of these types (supported types: createFunction, createPackage, createPackageBody, createProcedure, createTrigger, createView)
+  optional string replace_if_exists_types = 31; // Sets replaceIfExists="true" for changes of these types (supported types: createProcedure, createView)
   optional bool report_enabled = 32; // [PRO] Enable or disable reporting.
   optional string report_name = 33; // [PRO] The name of the report.
   optional string report_path = 34; // [PRO] The path to the directory to generate the report.
