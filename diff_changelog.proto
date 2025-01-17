@@ -26,9 +26,9 @@ message DiffChangelogRequest {
   optional int32 drift_severity_unexpected = 10; // [PRO] Sets the return code for "unexpected" type drift found in diff or diffchangelog operations. Options are 0, 1, 2, 3, 4
   optional string driver = 11; // The JDBC driver class
   optional string driver_properties_file = 12; // The JDBC driver properties file
-  optional string exclude_objects = 13; // Objects to exclude from diff
+  optional string exclude_objects = 13; // Objects to exclude from diff. Supports regular expressions. Defaults to null.
   optional bool include_catalog = 14; // If true, the catalog will be included in generated changeSets. Defaults to false.
-  optional string include_objects = 15; // Objects to include in diff
+  optional string include_objects = 15; // Objects to include in diff. Supports regular expressions. Defaults to null.
   optional bool include_schema = 16; // If true, the schema will be included in generated changeSets. Defaults to false.
   optional bool include_tablespace = 17; // Include the tablespace attribute in the changelog. Defaults to false.
   optional string label_filter = 18; // Changeset labels to generate
@@ -48,13 +48,15 @@ message DiffChangelogRequest {
   optional bool report_enabled = 32; // [PRO] Enable or disable reporting.
   optional string report_name = 33; // [PRO] The name of the report.
   optional string report_path = 34; // [PRO] The path to the directory to generate the report.
-  optional string run_on_change_types = 35; // Sets runOnChange="true" for changesets containing solely changes of these types (e. g. createView, createProcedure, ...).
-  optional string schemas = 36; // Schemas to include in diff
-  optional bool skip_object_sorting = 37; // When true will skip object sorting. This can be useful on databases that have a lot of packages/procedures that are linked to each other
-  string url = 38; // *required* The JDBC database connection URL
-  optional bool use_or_replace_option = 39; // If true, will add 'OR REPLACE' option to the create view change object
-  optional string username = 40; // Username to use to connect to the database
-  liquibase.GlobalOptions global_options = 41;
+  optional bool report_suppress_exception = 35; // [PRO] Setting to prevent the display of exceptions (which might contain SQL) in operation reports. If suppressSql is on, and no value is provided here, it is assumed to also be on.
+  optional bool report_suppress_sql = 36; // [PRO] Setting to prevent the display of changeset SQL in operation reports.
+  optional string run_on_change_types = 37; // Sets runOnChange="true" for changesets containing solely changes of these types (e. g. createView, createProcedure, ...).
+  optional string schemas = 38; // Schemas to include in diff
+  optional bool skip_object_sorting = 39; // When true will skip object sorting. This can be useful on databases that have a lot of packages/procedures that are linked to each other
+  string url = 40; // *required* The JDBC database connection URL
+  optional bool use_or_replace_option = 41; // If true, will add 'OR REPLACE' option to the create view change object
+  optional string username = 42; // Username to use to connect to the database
+  liquibase.GlobalOptions global_options = 43;
 }
 
 message Response {

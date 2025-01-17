@@ -6,7 +6,7 @@ Compare two databases to produce changesets and write them to a changelog file
 ```yaml
 steps:
 - uses: actions/checkout@v3
-- uses: liquibase-github-actions/diff-changelog@v4.30.0
+- uses: liquibase-github-actions/diff-changelog@v4.31.0
   with:
     # Changelog file to write results
     # string
@@ -78,7 +78,7 @@ steps:
     # Optional
     driverPropertiesFile: ""
 
-    # Objects to exclude from diff
+    # Objects to exclude from diff. Supports regular expressions. Defaults to null.
     # string
     # Optional
     excludeObjects: ""
@@ -88,7 +88,7 @@ steps:
     # Optional
     includeCatalog: ""
 
-    # Objects to include in diff
+    # Objects to include in diff. Supports regular expressions. Defaults to null.
     # string
     # Optional
     includeObjects: ""
@@ -183,6 +183,16 @@ steps:
     # Optional
     reportPath: ""
 
+    # [PRO] Setting to prevent the display of exceptions (which might contain SQL) in operation reports. If suppressSql is on, and no value is provided here, it is assumed to also be on.
+    # bool
+    # Optional
+    reportSuppressException: ""
+
+    # [PRO] Setting to prevent the display of changeset SQL in operation reports.
+    # bool
+    # Optional
+    reportSuppressSql: ""
+
     # Sets runOnChange="true" for changesets containing solely changes of these types (e. g. createView, createProcedure, ...).
     # string
     # Optional
@@ -220,7 +230,7 @@ The liquibase diff changelog action accepts all valid liquibase global options a
 ```yaml
 steps:
   - uses: actions/checkout@v3
-  - uses: liquibase-github-actions/diff-changelog@v4.30.0
+  - uses: liquibase-github-actions/diff-changelog@v4.31.0
     with:
       changelogFile: ""
       referenceUrl: ""
